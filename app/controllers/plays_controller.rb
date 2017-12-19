@@ -10,7 +10,7 @@ class PlaysController < ApplicationController
     end
     
     def new
-        @play = Play.new
+        @play = current_user.play.build
     end
     
     def create
