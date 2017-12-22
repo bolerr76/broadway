@@ -3,7 +3,12 @@ class PlaysController < ApplicationController
     
     
     def index
+      if params[:category].blank?
         @plays = Play.all.order("created_at DESC")
+      else
+        @category_id = Category.find_by(name: params[:category]).id
+        @plays = Play.where(:category_id => @category_id).order("created_at DESC")
+      end
     end
     
     def show
@@ -52,11 +57,7 @@ class PlaysController < ApplicationController
         params.require(:play).permit(:title, :description, :director, :category_id)
     end
     
-    private
-    
     def find_play
          @play = Play.find(params[:id])
     end
-    
-    
 end
